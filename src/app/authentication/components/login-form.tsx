@@ -23,8 +23,8 @@ import { FormField } from "@/components/ui/form";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-const SignUpForm = () => {
-  const registerSchema = z.object({
+const LoginForm = () => {
+  const loginSchema = z.object({
     name: z.string().trim().min(1, { message: "Nome é obrigatório" }),
     email: z.string().trim().email({ message: "Email inválido" }),
     password: z
@@ -33,8 +33,8 @@ const SignUpForm = () => {
       .min(8, { message: "Senha deve ter pelo menos 8 caracteres" }),
   });
 
-  const form = useForm<z.infer<typeof registerSchema>>({
-    resolver: zodResolver(registerSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -42,7 +42,7 @@ const SignUpForm = () => {
     },
   });
 
-  function onSubmit(data: z.infer<typeof registerSchema>) {
+  function onSubmit(data: z.infer<typeof loginSchema>) {
     console.log(data);
   }
   
@@ -98,7 +98,7 @@ const SignUpForm = () => {
             />
           </CardContent>
           <CardFooter>
-            <Button type="submit">Criar conta</Button>
+            <Button type="submit">Entrar</Button>
           </CardFooter>
         </form>
       </Form>
@@ -106,4 +106,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default LoginForm;
