@@ -56,8 +56,12 @@ const LoginForm = () => {
         onSuccess: () => {
           router.push("/dashboard");
         },
-        onError: () => {
-          toast.error("Email ou senha inválidos");
+        onError: (ctx) => {
+          if (ctx.error.code === "INVALID_EMAIL_OR_PASSWORD") {
+            toast.error("Email ou senha inválidos");
+          } else {
+            toast.error("Erro ao fazer login");
+          }
         },
       }
     );

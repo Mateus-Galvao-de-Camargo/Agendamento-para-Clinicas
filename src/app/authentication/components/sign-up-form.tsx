@@ -59,8 +59,12 @@ const SignUpForm = () => {
         onSuccess: () => {
           router.push("/dashboard");
         },
-        onError: () => {
-          toast.error("Email já cadastrado");
+        onError: (ctx) => {
+          if (ctx.error.code === "USER_ALREADY_EXISTS") {
+            toast.error("Email já cadastrado");
+          } else {
+            toast.error("Erro ao criar conta");
+          }
         },
       }
     );
