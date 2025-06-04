@@ -1,7 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -22,10 +25,12 @@ import {
 import { FormField } from "@/components/ui/form";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 
 const LoginForm = () => {
+  const router = useRouter();
+
   const loginSchema = z.object({
-    name: z.string().trim().min(1, { message: "Nome é obrigatório" }),
     email: z.string().trim().email({ message: "Email inválido" }),
     password: z
       .string()
@@ -36,25 +41,35 @@ const LoginForm = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof loginSchema>) {
-    console.log(data);
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    await authClient.signIn.email(
+      {
+        email: values.email,
+        password: values.password,
+      },
+      {
+        onSuccess: () => {
+          router.push("/dashboard");
+        },
+        onError: () => {
+          toast.error("Email ou senha inválidos");
+        },
+      }
+    );
   }
-  
+
   return (
     <Card>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <CardHeader>
             <CardTitle>Login</CardTitle>
-            <CardDescription>
-              Faça login aqui.
-            </CardDescription>
+            <CardDescription>Faça login aqui.</CardDescription>
           </CardHeader>
           <CardContent>
             <FormField
@@ -85,7 +100,13 @@ const LoginForm = () => {
             />
           </CardContent>
           <CardFooter>
-            <Button type="submit">Entrar</Button>
+            <Button type="submit" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : (
+                "Entrar"
+              )}
+            </Button>
           </CardFooter>
         </form>
       </Form>
