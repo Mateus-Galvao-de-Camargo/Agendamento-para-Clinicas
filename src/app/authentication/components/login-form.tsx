@@ -51,25 +51,12 @@ const LoginForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <CardHeader>
-            <CardTitle>Criar conta</CardTitle>
+            <CardTitle>Login</CardTitle>
             <CardDescription>
-              Crie uma conta aqui. Após salvar, você será logado.
+              Faça login aqui.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nome</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Seu nome" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
               name="email"
