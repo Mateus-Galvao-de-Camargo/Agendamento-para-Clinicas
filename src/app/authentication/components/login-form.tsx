@@ -105,11 +105,10 @@ const LoginForm = () => {
           </CardContent>
           <CardFooter>
             <Button type="submit" disabled={form.formState.isSubmitting}>
-              {form.formState.isSubmitting ? (
+              {form.formState.isSubmitting && (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              ) : (
-                "Entrar"
               )}
+              Entrar
             </Button>
           </CardFooter>
         </form>
