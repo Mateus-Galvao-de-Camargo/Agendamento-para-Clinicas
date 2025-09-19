@@ -103,12 +103,16 @@ export function AppSidebar() {
                 <SidebarMenuButton size="lg">
                   <Avatar>
                     <AvatarFallback>
-                      {session.data?.user.name.charAt(0)}
+                      {session.data?.user?.name?.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="text-sm">{session.data?.user.clinic.name}</p>
-                    <p className="text-sm text-muted-foreground">{session.data?.user.email}</p>
+                    <p className="text-sm">
+                      {session.data?.user?.clinic?.name}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {session.data?.user?.email}
+                    </p>
                   </div>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
